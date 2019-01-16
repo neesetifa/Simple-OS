@@ -4,7 +4,7 @@ class Disk
 	static final int NUM_SECTORS = 1024;
 	StringBuffer sectors[] = new StringBuffer[NUM_SECTORS];
 	static int next_free_sector=0;    //record current empty position 
-    void write(int sector, StringBuffer data) throws InterruptedException
+    	void write(int sector, StringBuffer data) throws InterruptedException
 	{
 		Thread.sleep(200);
 		sectors[sector] = new StringBuffer(data.toString());		
@@ -17,8 +17,5 @@ class Disk
 		StringBuffer a=sectors[sector];
 		data.append(a);
 	}
-	/*int next_free_sector()
-	{
-		return sect_ptr;
-	}*/
+
 }
