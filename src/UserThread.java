@@ -40,9 +40,6 @@ class UserThread
 				if(line.substring(0,5).equals(".save"))
 				{
 					read_file_name=line.substring(6);
-					
-									
-					
 					FileInfo file = new FileInfo();
 					file.diskNumber=mainClass.RM_disk.request();
 					file.startingSector=mainClass.disk_m.get_next_free_sector(file.diskNumber);
@@ -67,15 +64,11 @@ class UserThread
 					//enter hash table value for file name and file info
 					mainClass.dir_m.enter(read_file_name,file);
 					//release current disk
-            		mainClass.RM_disk.release(file.diskNumber);
+            				mainClass.RM_disk.release(file.diskNumber);
 					//line=br.readLine();
 					System.out.println("#DISK-"+(file.diskNumber+1)+" is now free");
 				
 				}
-			
-
-				
-				
 				else if(line.substring(0,6).equals(".print"))
 				{
 					
@@ -85,36 +78,6 @@ class UserThread
 
 					//just for printing a message, like the one in mainClass
 					print_job.join();
-
-					/*
-					System.out.println("3--"+line);
-
-					String print_file_name=line.substring(7);
-					FileInfo file=new FileInfo();
-					file=mainClass.dir_m.lookup(print_file_name);
-					
-					
-					StringBuffer printerBuffer = new StringBuffer();
-					Printer printer = new Printer(uid);
-					System.out.println(print_file_name+"--disk number"+file.diskNumber+" starting sector:"+file.startingSector+" file length"+file.fileLength);
-					
-					try{
-						for(int i = file.startingSector; i<file.startingSector+file.fileLength;++i)
-   						{	
-   							mainClass.disks[file.diskNumber].read(i, printerBuffer);
-							//System.out.println(printerBuffer);
-   							printer.print(printerBuffer);
-							System.out.println("printing...");
-   						}
-					}
-					catch (IOException e) {
-						e.printStackTrace();
-					}
-					catch (InterruptedException e) {
-						e.printStackTrace();
-	
-					}
-					*/
 				}
 				
 			
