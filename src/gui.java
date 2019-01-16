@@ -16,12 +16,12 @@ class my_output extends OutputStream {
 
 	@Override
 	public void write(int b) throws IOException {
-		//transfer int type into char type		
-		char a=(char) b;
-		String s=String.valueOf(a);
-		//add new output at the end of previous text
+	//transfer int type into char type		
+	char a=(char) b;
+	String s=String.valueOf(a);
+	//add new output at the end of previous text
         text.append(s);
-		//keeps reaching at the end of text area
+	//keeps reaching at the end of text area
         text.setCaretPosition(text.getDocument().getLength());
 	}
 }
@@ -37,23 +37,23 @@ public class gui extends JFrame {
 	//original log, including all output    
 	JTextArea text_log;
      
-    JButton start_button = new JButton("Start");
+        JButton start_button = new JButton("Start");
 	
 
 	//initialize the position
 	int last_index=10;
      
-    public gui() {
-        super("Simple OS");
+    	public gui() {
+        	super("Simple OS");
         
 
 		PrintStream aout=System.out;
  
-        text_log = new JTextArea(50, 10);
-        text_log.setEditable(false);
+        	text_log = new JTextArea(50, 10);
+        	text_log.setEditable(false);
 
-        PrintStream print_stream = new PrintStream(new my_output(text_log));     
-        System.setOut(print_stream);
+        	PrintStream print_stream = new PrintStream(new my_output(text_log));     
+        	System.setOut(print_stream);
  
        	
 		setLayout(null);
@@ -117,50 +117,48 @@ public class gui extends JFrame {
 		//a document listener, if anything is inserted in text_log 
 		
 		text_log.getDocument().addDocumentListener(new DocumentListener() {
-             public void changedUpdate(DocumentEvent e) {
-             }
-             public void insertUpdate(DocumentEvent e) {
-				String s = text_log.getText(); 
-				int index=s.lastIndexOf("\n");
-				//since output stream only add one character every time, we set symbol '#' to tell if it's a new line
-				//if not a new line, we don't do anything
-				if( last_index<index)
+            	public void changedUpdate(DocumentEvent e) {
+             	}
+             	public void insertUpdate(DocumentEvent e) {
+			String s = text_log.getText(); 
+			int index=s.lastIndexOf("\n");
+			//since output stream only add one character every time, we set symbol '#' to tell if it's a new line
+			//if not a new line, we don't do anything
+			if( last_index<index)
+			{
+				String t=s.substring(s.lastIndexOf("#"));
+				if(t.substring(0,6).equals("#USER-"))
 				{
-					String t=s.substring(s.lastIndexOf("#"));
-					if(t.substring(0,6).equals("#USER-"))
-					{
-						String tmp=t.substring(6,7);
-						int num=Integer.parseInt(tmp);
-						user_log[num-1].append(t);
-						user_log[num-1].setCaretPosition(user_log[num-1].getDocument().getLength());
-					}
-					
-					else if(t.substring(0,9).equals("#Printer-"))	
-					{
-						String tmp=t.substring(9,10);
-						int num=Integer.parseInt(tmp);
-						printer_log[num-1].append(t);
-						printer_log[num-1].setCaretPosition(printer_log[num-1].getDocument().getLength());
-
-					}
-
-					else if(t.substring(0,6).equals("#DISK-"))
-					{
-						String tmp=t.substring(6,7);
-						int num=Integer.parseInt(tmp);
-						disk_log[num-1].append(t);
-						disk_log[num-1].setCaretPosition(disk_log[num-1].getDocument().getLength());
-
-					}
-					//record last position of "#"
-					last_index=index;
+					String tmp=t.substring(6,7);
+					int num=Integer.parseInt(tmp);
+					user_log[num-1].append(t);
+					user_log[num-1].setCaretPosition(user_log[num-1].getDocument().getLength());
 				}
+					
+				else if(t.substring(0,9).equals("#Printer-"))	
+				{
+					String tmp=t.substring(9,10);
+					int num=Integer.parseInt(tmp);
+					printer_log[num-1].append(t);
+					printer_log[num-1].setCaretPosition(printer_log[num-1].getDocument().getLength());
+				}
+
+				else if(t.substring(0,6).equals("#DISK-"))
+				{
+					String tmp=t.substring(6,7);
+					int num=Integer.parseInt(tmp);
+					disk_log[num-1].append(t);
+					disk_log[num-1].setCaretPosition(disk_log[num-1].getDocument().getLength());
+				}
+				//record last position of "#"
+				last_index=index;
+			}
 
              }
              public void removeUpdate(DocumentEvent e) {
              }
          });
-		//===========================================
+	//===========================================
 		
         
         ActionListener act_listener=new ActionListener() {
@@ -184,16 +182,16 @@ public class gui extends JFrame {
 	//run the main program
     public void printLog() {
         Runnable runnable = new Runnable() 
-		{
+	{
             @Override
             public void run() 
-			{
-				mainClass os=new mainClass();
-				os.run();			
+	    {
+		mainClass os=new mainClass();
+		os.run();			
 				
             }
         };
-		Thread thread = new Thread(runnable);
+	Thread thread = new Thread(runnable);
         thread.start();
     }
      
@@ -201,12 +199,12 @@ public class gui extends JFrame {
 		
     public static void main(String[] args) {
         Runnable runnable = new Runnable() 
-		{
+	{
             @Override
             public void run() {
                 new gui().setVisible(true);
             }
         };
-		SwingUtilities.invokeLater(runnable);
+	SwingUtilities.invokeLater(runnable);
     }
 }
